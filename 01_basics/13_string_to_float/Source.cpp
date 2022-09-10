@@ -16,6 +16,9 @@
  *				to_string	converts an integral or floating point value to string
  *
  *				to_wstring	converts an integral or floating point value to wstring
+ *
+ *		- Use sstream library:
+ *			std::stringsstream(str) >> numeric_data
  */
 #include <iostream>
 #include <string>
