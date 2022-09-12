@@ -1,5 +1,5 @@
 /*
- * Relational and logical operators:
+ * Relational operators:
  *	Operator		Example			True Condition			  False Condition
  *	   ==			 A==B		  A equals B				  A is not equal to B
 *	   !=			 A!=B		  A is not equal to B		  A equals to B
