@@ -3,7 +3,7 @@
  *	- while loops
  *	- do .. while loops
  *
- * Syntax:
+ * Syntax for while loop:
  *	while(condition)
  *	{
  *		statements;
