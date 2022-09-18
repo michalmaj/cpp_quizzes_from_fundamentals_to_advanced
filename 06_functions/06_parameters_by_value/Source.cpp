@@ -1,6 +1,13 @@
 /*
  * In function we have a copy.
  * Any changes made in value don't affect the original variable.
+ *
+ * So, now we know that C++ respects variable scope. Changes to a variable that are made in
+ * a function will not effect the variable in the main part of the program.
+ *
+ * There are two methods to rectify this situation:
+ *  - Return the altered variable
+ *  - Pass the variable as a reference
  */
 #include<iostream>
 
