@@ -1,21 +1,25 @@
 #pragma once
 
 #include <iostream>
+#include <format>
+#include <string>
 
 class Game
 {
-	char board[4][4];
+	char board[4][4]{};
 	std::string player_name;
 	char winner;
 	char checkRows();
 	char checkCols();
 	char checkDiagonals();
+	char checkWinner();
 
 public:
 	Game();
 	void setPosition(int w, int c, char player);
 	void printBoard();
-	bool checkWinner();
+	std::string whoIsWinner();
+	
 };
 
 inline Game::Game()
@@ -32,13 +36,15 @@ inline void Game::setPosition(int r, int c, char player)
 {
 	while(true)
 	{
-		if (board[r][c] != '-')
+		if (board[r][c] == '-')
 		{
 			board[r][c] = player;
 			break;
 		}
 
 		std::cout << "This position is used!\n";
+		std::cout << "Enter new row and column: ";
+		std::cin >> r >> c;
 	}
 }
 
@@ -60,13 +66,15 @@ inline char Game::checkRows()
 	int fourInRowO{ 0 };
 	for (int i{ 0 }; i < 4; ++i)
 	{
+		fourInRowX = 0;
+		fourInRowO = 0;
 		for (int j{ 0 }; j < 4; ++j)
 		{
 			if(board[i][j] == '-')
 				break;
 			if (board[i][j] == 'x')
 				fourInRowX++;
-			if (board[i][j] == 'y')
+			if (board[i][j] == 'o')
 				fourInRowO++;
 		}
 	}
@@ -92,13 +100,15 @@ inline char Game::checkCols()
 	int fourInColO{ 0 };
 	for (int j{ 0 }; j < 4; ++j)
 	{
+		fourInColX = 0;
+		fourInColO = 0;
 		for (int i{ 0 }; i < 4; ++i)
 		{
 			if (board[i][j] == '-')
 				break;
 			if (board[i][j] == 'x')
 				fourInColX++;
-			if (board[i][j] == 'y')
+			if (board[i][j] == 'o')
 				fourInColO++;
 		}
 	}
@@ -129,7 +139,7 @@ inline char Game::checkDiagonals()
 			break;
 		if (board[i][j] == 'x')
 			fourInDiagX++;
-		if (board[i][j] == 'y')
+		if (board[i][j] == 'o')
 			fourInDiagO++;
 		++i;
 		++j;
@@ -147,7 +157,7 @@ inline char Game::checkDiagonals()
 				break;
 			if (board[i][j] == 'x')
 				fourInDiagX++;
-			if (board[i][j] == 'y')
+			if (board[i][j] == 'o')
 				fourInDiagO++;
 			++i;
 			--j;
@@ -170,5 +180,36 @@ inline char Game::checkDiagonals()
 }
 
 
+inline char Game::checkWinner()
+{
+	char winner{ '-' };
+	winner = checkRows();
+	if (winner == '-')
+		winner = checkCols();
+	if (winner == '-')
+		winner = checkDiagonals();
+
+	return winner;
+}
+
+inline std::string Game::whoIsWinner()
+{
+	char winner = checkWinner();
+	for (int j{ 0 }; j < 4; ++j)
+	{
+		for (int i{ 0 }; i < 4; ++i)
+		{
+			if (board[i][j] == '-' and winner == '-')
+				return "Game is still on";
+		}
+	}
+	std::string answer{ std::format("The winner is {}", winner) };
+	if (winner == 'x')
+		return answer;
+	else if (winner == 'o')
+		return answer;
+	else
+		return "Tie";		
+}
 
 
