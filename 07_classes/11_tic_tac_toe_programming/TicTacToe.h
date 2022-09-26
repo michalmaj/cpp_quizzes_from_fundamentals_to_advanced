@@ -9,6 +9,8 @@ class Game
 	char board[4][4]{};
 	std::string player_name;
 	char winner;
+	bool is_end;
+	int moves;
 	char checkRows();
 	char checkCols();
 	char checkDiagonals();
@@ -19,11 +21,14 @@ public:
 	void setPosition(int w, int c, char player);
 	void printBoard();
 	std::string whoIsWinner();
+	bool endGame();
 	
 };
 
 inline Game::Game()
 {
+	is_end = false;
+	moves = 0;
 	winner = '-';
 	for(int i{0}; i < 4; ++i)
 	{
@@ -39,6 +44,7 @@ inline void Game::setPosition(int r, int c, char player)
 		if (board[r][c] == '-')
 		{
 			board[r][c] = player;
+			moves++;
 			break;
 		}
 
@@ -77,19 +83,20 @@ inline char Game::checkRows()
 			if (board[i][j] == 'o')
 				fourInRowO++;
 		}
+		if (fourInRowX == 4)
+		{
+			winner = 'x';
+			return 'x';
+		}
+
+		if (fourInRowO == 4)
+		{
+			winner = 'o';
+			return 'o';
+		}
 	}
 
-	if(fourInRowX == 4)
-	{
-		winner = 'x';
-		return 'x';
-	}
 
-	if(fourInRowO == 4)
-	{
-		winner = 'o';
-		return 'o';
-	}
 
 	return '-';
 }
@@ -111,19 +118,20 @@ inline char Game::checkCols()
 			if (board[i][j] == 'o')
 				fourInColO++;
 		}
+		if (fourInColX == 4)
+		{
+			winner = 'x';
+			return 'x';
+		}
+
+		if (fourInColO == 4)
+		{
+			winner = 'o';
+			return 'o';
+		}
+
 	}
 
-	if (fourInColX == 4)
-	{
-		winner = 'x';
-		return 'x';
-	}
-
-	if (fourInColO == 4)
-	{
-		winner = 'o';
-		return 'o';
-	}
 
 	return '-';
 }
@@ -150,6 +158,7 @@ inline char Game::checkDiagonals()
 		fourInDiagX = 0;
 		fourInDiagO = 0;
 		i = 0;
+		j = 3;
 
 		while (i < 4 and j >= 0)
 		{
@@ -197,19 +206,25 @@ inline std::string Game::whoIsWinner()
 	char winner = checkWinner();
 	for (int j{ 0 }; j < 4; ++j)
 	{
+		if(winner == 'x' or winner == 'o')
+			break;
 		for (int i{ 0 }; i < 4; ++i)
 		{
-			if (board[i][j] == '-' and winner == '-')
-				return "Game is still on";
+			if (board[i][j] == '-')
+				return "Game is still on\n";
 		}
 	}
-	std::string answer{ std::format("The winner is {}", winner) };
 	if (winner == 'x')
-		return answer;
+		return "x";
 	else if (winner == 'o')
-		return answer;
+		return "o";
 	else
 		return "Tie";		
+}
+
+inline bool Game::endGame()
+{
+	return moves == 16;
 }
 
 
