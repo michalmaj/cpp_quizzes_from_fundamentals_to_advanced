@@ -1,3 +1,19 @@
+/*
+ * I would like you to create a game called TicTacToe.
+ * In this version of the game we will need to:
+ *		- Create a 4x4 game board;
+ *		- Prompt the first user (the 'x' user) to enter their name, prompt the second user
+ *		  (the 'o' user) to enter their name;
+ *		- Prompt the 'x' user to select a grid position where they would like to place an 'x'.
+ *		  Prompt the 'o' user to select a grid position where they would like to place an 'o'.
+ *		- After each user has a turn, check for any row, column, diagonal that has 4 'x's or 4 'o's.
+ *		- If 4 'x's are found in the same col, row, diagonal, declare the 'x' user the winner.
+ *		  If 4 'o's are found in the same col, row, diagonal, declare the 'o' user the winner.
+ *		- End the game and declare the winner.
+ *		- If the grid is filled (each player gets 8 turns) and there is not a row, column,
+ *		  diagonal with 4 of the same symbol, the game is tied. Declare a tie game.
+ */
+
 #include "TicTacToeFunctions.cpp"
 
 int main()
@@ -8,26 +24,25 @@ int main()
 
 	//game.printBoard();
 	getUserNames(nameX, nameO);
+	game.printBoard();
 
 	while(!game.endGame())
 	{
-		game.printBoard();
-
 		// 'x' player turn
 		printUserPrompt(nameX, 'x');
 		checkResponse(game, 'x');
-
+		game.printBoard();
 		auto result = game.whoIsWinner();
 		if(result == "x")
 			break;
 
-	//	// 'o' player turn
-	//	printUserPrompt(nameX, 'o');
-	//	checkResponse(game, 'o');
-
-	//	result = game.whoIsWinner();
-	//	if (result == "o")
-	//		break;
+		// 'o' player turn
+		printUserPrompt(nameX, 'o');
+		checkResponse(game, 'o');
+		game.printBoard();
+		result = game.whoIsWinner();
+		if (result == "o")
+			break;
 	}
 	game.printBoard();
  	std::cout << "The winner is: " << game.whoIsWinner() << std::endl;
@@ -35,58 +50,3 @@ int main()
 
 	return 0;
 }
-
-
-/*game.setPosition(0, 0, 'o');
-		game.printBoard();
-
-		game.setPosition(0, 1, 'o');
-		game.printBoard();
-
-		game.setPosition(0, 2, 'o');
-		game.printBoard();
-
-		game.setPosition(0, 3, 'x');
-		game.printBoard();
-
-
-
-		game.setPosition(1, 0, 'x');
-		game.printBoard();
-
-		game.setPosition(1, 1, 'o');
-		game.printBoard();
-
-		game.setPosition(1, 2, 'o');
-		game.printBoard();
-
-		game.setPosition(1, 3, 'o');
-		game.printBoard();
-
-
-
-		game.setPosition(2, 0, 'x');
-		game.printBoard();
-
-		game.setPosition(2, 1, 'o');
-		game.printBoard();
-
-		game.setPosition(2, 2, 'x');
-		game.printBoard();
-
-		game.setPosition(2, 3, 'o');
-		game.printBoard();
-
-
-
-		game.setPosition(3, 0, 'x');
-		game.printBoard();
-
-		game.setPosition(3, 1, 'x');
-		game.printBoard();
-
-		game.setPosition(3, 2, 'x');
-		game.printBoard();
-
-		game.setPosition(3, 3, 'x');
-		game.printBoard();*/
